@@ -1,9 +1,9 @@
 <template>
   <el-row style="margin-top: 150px">
-    <el-col :span="6">
+    <el-col :span="3">
       <h1></h1>
     </el-col>
-    <el-col :span="12">
+    <el-col :span="15">
       <el-form ref="form" :model="form" label-width="80px">
         <el-form-item label="Email: ">
           <el-input v-model="form.email" @keyup.enter.native="login"></el-input>
@@ -46,7 +46,7 @@
         <!--      <el-form-item label="活动形式">-->
         <!--        <el-input type="textarea" v-model="form.desc"></el-input>-->
         <!--      </el-form-item>-->
-        <el-form-item>
+        <el-form-item style="margin-left: -100px">
           <el-button icon="el-icon-check" type="primary" @click="login" @keyup.enter.native="login" circle></el-button>
           <el-button icon="el-icon-circle-plus-outline" type="danger" @click="register" circle style="margin-left: 50px"></el-button>
           <!--        <el-button>取消</el-button>-->
