@@ -13,7 +13,7 @@
 
 <script>
 
-import NavMenu from "@/views/NavMenu";
+import NavMenu from "@/components/NavMenu.vue";
 
 export default {
   name: 'app',

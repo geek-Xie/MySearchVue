@@ -1,6 +1,6 @@
 <template>
     <div>
-        <el-avatar :src="image_url" style="margin-left: -240px"></el-avatar>
+        <el-avatar :src="image_url" style="margin-left: -50px"></el-avatar>
         <el-row style="margin-top: 150px">
             <el-col :span="3">
                 <h1></h1>

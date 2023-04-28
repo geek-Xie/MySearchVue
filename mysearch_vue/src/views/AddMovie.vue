@@ -3,13 +3,13 @@
         <el-avatar :src="image_url" style="margin-left: -50px"></el-avatar>
         <el-row>
             <el-col :span="3">
-                <el-button plain type="primary" style="margin-left: 40px" @click="addMovie"><i class="el-icon-plus"></i></el-button>
+                <el-input v-model="input" placeholder="请输入内容" @keyup.enter.native="searchMovie"></el-input>
             </el-col>
             <div style="margin-top: 100px" class="block" v-for="(movie,index) in this.movie_list" :key="index">
                 <el-col :span="4">
                     <el-image
                             style="width: 110px; height: 110px"
-                            @click="showName(movie)"
+                            @click="addMovie(movie)"
                             :src=getPictureUrl(movie)
                             fit="fill"/>
 
@@ -43,15 +43,15 @@
 </template>
 
 <script>
-
 import router from "@/router";
 
 export default {
-    name: "MyDou",
+    name: "AddMovie",
     data() {
         return {
-            "image_url": "",
-            "movie_list": []
+            image_url: "",
+            input: "",
+            movie_list: []
         }
     },
     beforeCreate() {
@@ -61,27 +61,33 @@ export default {
         }).then(response => {
             this.image_url = response.data.data["url"]
         })
-        this.axios({
-            method: "get",
-            url: "http://localhost:8082/dou/all"
-        }).then(response => {
-            // this.movie_list = response.data.data["movieList"]
-            this.movie_list = response.data.data["movies"]
-        })
     },
     methods: {
+        searchMovie() {
+            this.axios({
+                method: "get",
+                url: "http://localhost:8082/dou/add/" + this.input
+            }).then(response => {
+                this.movie_list = response.data.data["movieList"]
+            })
+        },
         getPictureUrl(movie) {
             // 拼接图片缓存链接，防止403
             return "https://images.weserv.nl/?url=" + movie.picture_url
         },
-        showName(movie) {
-            console.log(movie.movie_name)
-            console.log(movie.picture_url)
-            console.log(movie.cast)
-            console.log(movie.rating_num)
-        },
-        addMovie() {
-            router.push("/mydou/add")
+        addMovie(movie) {
+            this.axios({
+                method: "post",
+                url: "http://localhost:8082/dou/add/",
+                data: {
+                    "movie_name": movie.movie_name,
+                    "cast": movie.cast,
+                    "picture_url": movie.picture_url,
+                    "rating_num": movie.rating_num
+                }
+            })
+            console.log("add")
+            router.push("/mydou")
         }
     }
 }
